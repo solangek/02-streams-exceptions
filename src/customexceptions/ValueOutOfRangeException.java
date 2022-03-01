@@ -1,7 +1,7 @@
 package customexceptions;
 
-public class ValueOutOfRangeException extends RuntimeException {
-    // Extending RuntimeException because the exception is expected to happen on runtime: when the user
+public class ValueOutOfRangeException extends Exception {
+    // the exception is expected to happen on runtime: when the user
     // enters the person's age. The compiler does not demand declaration of RuntimeException or it's descendants,
     // but we do not want the user to see our exceptions because it is very unpleasant. We will declare and catch
     // the exception wherever we will use it.
