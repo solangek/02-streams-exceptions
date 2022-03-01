@@ -33,7 +33,7 @@ public class SimpleTime {
      * @param hour, minute, second The new time.
      * @exception IllegalArgumentException in case the hour minutes or second are not in the correct range
      */
-    public void setTime(int hour, int minute, int second) throws IllegalArgumentException {
+    public void setTime(int hour, int minute, int second)  {
         if (hour < 0 || hour > 23 || minute < 0 || minute > 59
                 || second < 0 || second > 59) {
             throw new IllegalArgumentException(ERROR_MESSAGE);

@@ -3,9 +3,8 @@ package customexceptions;
 public class ValueOutOfRangeException extends Exception {
     // the exception is expected to happen on runtime: when the user
     // enters the person's age. The compiler does not demand declaration of RuntimeException or it's descendants,
-    // but we do not want the user to see our exceptions because it is very unpleasant. We will declare and catch
-    // the exception wherever we will use it.
-
+    // but it DOES demand declaration for descendants of Exception
+    // You can modify this class to extends RuntimeException to test also unchecked exceptions.
 
     public ValueOutOfRangeException(int value, int min, int max) {
         // The exception must provide useful debug information. In our case, we want to provide the bad value
