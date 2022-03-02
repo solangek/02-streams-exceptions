@@ -10,7 +10,7 @@ public class Main {
         System.out.println("while handling possible exceptions.");
 
         String name = null;
-        int age = -1;
+        int age;
         Person person = null;
         Scanner scanner = new Scanner(System.in);
 
@@ -24,12 +24,17 @@ public class Main {
                 System.out.println("Enter person's age: ");
                 age = scanner.nextInt();
 
+                String s = scanner.nextLine();
+                int i = Integer.parseInt(s);
+
                 person = new Person(name, age); // If an exception is thrown, will not be initialized
             } catch (ValueOutOfRangeException e) {
                     System.out.printf("The age you have entered is illegal, please enter an age between %d to %d.%n",
                             Person.MIN_AGE, Person.MAX_AGE);
             } catch (InputMismatchException e) {
                 System.out.println("Age must be an integer, please enter an integer. Digits only, please.");
+            } catch (Exception e) { // other exceptions will be handled here
+                System.out.println("Some unexpected input problem occured");
             } finally {
                 // This 'finally' is not really necessary here, the call to nextLine() could happen after the try.
                 // When is it necessary? if, for example, we had a return statement in the try block or in any of

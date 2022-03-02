@@ -6,6 +6,11 @@ public class ValueOutOfRangeException extends Exception {
     // but it DOES demand declaration for descendants of Exception
     // You can modify this class to extends RuntimeException to test also unchecked exceptions.
 
+    // default ctor to pass the error message
+    public ValueOutOfRangeException(String msg) {
+        super(msg);
+    }
+
     public ValueOutOfRangeException(int value, int min, int max) {
         // The exception must provide useful debug information. In our case, we want to provide the bad value
         // and the min and max of the range it should have been in, so that a developer who has to debug this
