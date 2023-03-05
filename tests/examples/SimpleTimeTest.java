@@ -10,21 +10,28 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * this is an example of writing tests with JUnit5
- * We don't learn Unit Testing in this course - I give it as an
- * example to illustrate the Project Management lecture I give for students
- * doing a 3rd year project. More information at:
- * https://howtodoinjava.com/junit-5-tutorial/
+ * More information at:
+ * <a href="https://howtodoinjava.com/junit-5-tutorial>JUnit tutorial</a>
+ * to run the tests, right click on the tests folder and select "Run all tests"
  *
  * @author solangekarsenty
  */
 class SimpleTimeTest {
     SimpleTime s;
 
+    /**
+     * this method is called before each test
+     * it is used to initialize the objects to test
+     */
     @BeforeEach
     void setUp() {
         s = new SimpleTime(2, 30, 40);
     }
 
+    /**
+     * this method is called after each test
+     * it is used to clean up the objects to test
+     */
     @AfterEach
     void tearDown() {
     }
@@ -32,17 +39,11 @@ class SimpleTimeTest {
     @Test
     void testCtor() {
         Assertions.assertThrows(IllegalArgumentException.class,
-                () -> {
-                    new SimpleTime(2, 60, 30);
-                });
+                () -> new SimpleTime(2, 60, 30));
         Assertions.assertThrows(IllegalArgumentException.class,
-                () -> {
-                    new SimpleTime(-1, 30, 30);
-                });
+                () -> new SimpleTime(-1, 30, 30));
         Assertions.assertThrows(IllegalArgumentException.class,
-                () -> {
-                    new SimpleTime(5, 30, 466);
-                });
+                () -> new SimpleTime(5, 30, 466));
     }
 
     @Test
@@ -61,18 +62,24 @@ class SimpleTimeTest {
     }
 
     @Test
+    void testInvalidValues() {
+        Assertions.assertThrows(IllegalArgumentException.class,
+                () -> s.setHour(24));
+        Assertions.assertThrows(IllegalArgumentException.class,
+                () -> s.setMinute(60));
+        Assertions.assertThrows(IllegalArgumentException.class,
+                () -> s.setSecond(60));
+    }
+
+    @Test
     void testInvalidModifiedValues() {
         Assertions.assertThrows(IllegalArgumentException.class,
-                () -> {
-                    s.setTime(24, 5, 30);
-                });
+                () -> s.setTime(24, 5, 30));
         Assertions.assertThrows(IllegalArgumentException.class,
-                () -> {
-                    s.setTime(4, 60, 30);
-                });
+                () -> s.setTime(4, 60, 30));
         Assertions.assertThrows(IllegalArgumentException.class,
-                () -> {
-                    s.setTime(5, 5, 60);
-                });
+                () -> s.setTime(5, 5, 60));
+        Assertions.assertThrows(IllegalArgumentException.class,
+                () -> s.setTime(24, 60, 60));
     }
 }

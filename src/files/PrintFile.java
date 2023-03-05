@@ -8,7 +8,9 @@ package files;
 import java.io.*;
 
 
-// Prints the content of a text file
+/**
+ * This program prints the content of a TEXT file to the screen.
+ */
 class PrintFile {
     public static void main(String[] args) {
         BufferedReader reader = null;

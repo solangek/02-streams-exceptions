@@ -12,8 +12,8 @@ import java.net.URI;
     % cd out/production/Example2-IO
     % java download.Downloader http://cs.hac.ac.il
  */
-class Downloader {
-    private String source;
+public class Downloader {
+    private String source;  // the URL to read from
 
     /**
      * ctor
@@ -27,7 +27,7 @@ class Downloader {
      * Downloads a remote file to the local disk.
      *
      * @param filename the output file to save the source to
-     * @exception throws an exception upon opening streams or reading. Closing of stream IOException is caught.
+     * @exception IOException upon opening streams or reading. Closing of stream IOException is caught.
      */
     public void downloadAnything(String filename) throws IOException {
         URL url = new URL(source);
@@ -61,7 +61,7 @@ class Downloader {
      * checks that content-type is TEXT otherwise does nothing and prints an error message
      *
      * @param filename the output file to save the source to
-     * @exception throws an exception upon opening streams or reading. Closing of stream IOException is caught.
+     * @exception IOException upon opening streams or reading. Closing of stream IOException is caught.
      */
     public void downloadIfText(String filename) throws IOException {
         String inputLine;
@@ -75,34 +75,37 @@ class Downloader {
         // get the HTTP response code
         int responseCode = con.getResponseCode();
 
+        if (responseCode != HttpURLConnection.HTTP_OK) {
+            System.out.println("failed to download " + filename);
+            return;
+        }
+        // we want to download only if the content-type is text
+        String contentType = con.getHeaderField("Content-Type");
+        if (!contentType.startsWith("text")) {
+            throw new IOException("Content-Type is not text");
+        }
         // we check if the response is 200 and if the content-type is TEXT
-        if (responseCode == HttpURLConnection.HTTP_OK && con.getContentType().startsWith("text/")) { // success
-            BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+         BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
 
-            PrintWriter output = new PrintWriter(new FileOutputStream(filename));
+        PrintWriter output = new PrintWriter(new FileOutputStream(filename));
 
-            // read each line
-            while ((inputLine = in.readLine()) != null) {
-                output.print(inputLine);
-            }
-
-            // we finished writing, fail on closing input is not fatal
-            try { in.close(); } catch (Exception e) {}
-            output.close();
-
-        } else {
-            System.out.println("failed to downloadAnything " + filename);
+        // read each line
+        while ((inputLine = in.readLine()) != null) {
+            output.print(inputLine);
         }
 
-
+        // we finished writing, fail on closing input is not fatal
+        try { in.close(); } catch (Exception e) {}
+        output.close();
 
     }
 
     /**
      * since Java 10 - using HttpClient
      * print the contents of the given URL, only if text
+     * @throws IOException if the URL does not exist or cannot be read
      */
-    public void printUrlContent() throws IOException, InterruptedException {
+    public String getUrlTextContent() throws IOException, InterruptedException {
         var request = HttpRequest.newBuilder()
                 .uri(URI.create(source))
                 .GET()
@@ -113,13 +116,16 @@ class Downloader {
 
         // print to stdout only if it is HTML
         if (response.headers().firstValue("Content-Type").orElse("").startsWith("text/html"))
-            System.out.println(response.body());
+            return(response.body());
+        else
+            throw new IOException("Content-Type is not text");
     }
     /**
      * Returns the content of a file as an array of bytes
      *
-     * @param filename - the name of the file
-     *
+     * @param filename the name of the file
+     * @return the content of the file as an array of bytes
+     * @throws IOException if the file does not exist or cannot be read
      */
     public byte[] getFileAsByteArray(String filename)  throws IOException {
 

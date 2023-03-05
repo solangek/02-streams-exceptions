@@ -35,6 +35,7 @@ public class ToUpper {
         } catch (IOException ioe) {
             System.err.println("Copying failed.");
         } finally {
+            // make sure we close the files even if an exception occurs
             try {
                 reader.close();
             } catch (Exception e) {}

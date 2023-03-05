@@ -20,11 +20,8 @@ public class SimpleTime {
      * @exception IllegalArgumentException in case the hour minutes or second are not in the correct range
      */
     public SimpleTime(int h, int m , int s) {
-        if (getHour() < 0 || getHour() > 23 || getMinute() < 0 || getMinute() > 59
-                || getSecond() < 0 || getSecond() > 59) {
-            throw new IllegalArgumentException(ERROR_MESSAGE);
-        } else
-            this.setTime(h,m,s);
+        validate(h,m,s);
+        this.setTime(h,m,s);
     }
 
     /**
@@ -34,10 +31,7 @@ public class SimpleTime {
      * @exception IllegalArgumentException in case the hour minutes or second are not in the correct range
      */
     public void setTime(int hour, int minute, int second)  {
-        if (hour < 0 || hour > 23 || minute < 0 || minute > 59
-                || second < 0 || second > 59) {
-            throw new IllegalArgumentException(ERROR_MESSAGE);
-        }
+        validate(hour, minute, second);
         this.setHour(hour);
         this.setMinute(minute);
         this.setSecond(second);
@@ -47,7 +41,16 @@ public class SimpleTime {
         return hour;
     }
 
+    /**
+     * Sets the hour of the clock.
+     *
+     * @param hour The new hour.
+     * @exception IllegalArgumentException in case the hour is not in the correct range
+     */
     public void setHour(int hour) {
+        if (hour < 0 || hour > 23) {
+            throw new IllegalArgumentException(ERROR_MESSAGE);
+        }
         this.hour = hour;
     }
 
@@ -55,7 +58,16 @@ public class SimpleTime {
         return minute;
     }
 
+    /**
+     * Sets the minute of the clock.
+     *
+     * @param minute The new minute.
+     * @exception IllegalArgumentException in case the minute is not in the correct range
+     */
     public void setMinute(int minute) {
+        if (minute < 0 || minute > 59) {
+            throw new IllegalArgumentException(ERROR_MESSAGE);
+        }
         this.minute = minute;
     }
 
@@ -63,7 +75,29 @@ public class SimpleTime {
         return second;
     }
 
+    /**
+     * Sets the second of the clock.
+     *
+     * @param second The new second.
+     * @exception IllegalArgumentException in case the second is not in the correct range
+     */
     public void setSecond(int second) {
+        if (second < 0 || second > 59) {
+            throw new IllegalArgumentException(ERROR_MESSAGE);
+        }
         this.second = second;
+    }
+
+    /**
+     * Validates the hour, minute and second.
+     *
+     * @param h, m, s The hour, minute and second to validate.
+     * @exception IllegalArgumentException in case the hour minutes or second are not in the correct range
+     */
+    private void validate(int h, int m, int s) {
+        if (h < 0 || h > 23 || m < 0 || m > 59
+                || s < 0 || s > 59) {
+            throw new IllegalArgumentException(ERROR_MESSAGE);
+        }
     }
 }
