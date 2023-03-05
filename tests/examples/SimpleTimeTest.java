@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * this is an example of writing tests with JUnit5
  * More information at:
- * <a href="https://howtodoinjava.com/junit-5-tutorial>JUnit tutorial</a>
+ * <a href="https://howtodoinjava.com/junit-5-tutorial">JUnit tutorial</a>
  * to run the tests, right click on the tests folder and select "Run all tests"
  *
  * @author solangekarsenty

@@ -104,6 +104,8 @@ public class Downloader {
      * since Java 10 - using HttpClient
      * print the contents of the given URL, only if text
      * @throws IOException if the URL does not exist or cannot be read
+     * @throws InterruptedException if the thread is interrupted
+     * @return the content of the URL as a String
      */
     public String getUrlTextContent() throws IOException, InterruptedException {
         var request = HttpRequest.newBuilder()

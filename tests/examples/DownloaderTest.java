@@ -9,6 +9,11 @@ import download.Downloader;
 
 import java.io.IOException;
 
+/** this is an example of writing tests with JUnit5
+ * More information at: <a href="https://howtodoinjava.com/junit-5-tutorial">JUnit tutorial</a> to run the tests,
+ * right click on the tests folder and select "Run all tests"
+ * @author solangekarsenty
+ * */
 public class DownloaderTest {
     Downloader d1, d2;
 
